@@ -1,4 +1,4 @@
-package uz.pdp;
+package uz.pdp.config;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -8,7 +8,7 @@ public class ServletDispatcherConfig extends AbstractDispatcherServletInitialize
     @Override
     protected WebApplicationContext createServletApplicationContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.register(WebMvcConfig.class);
+        context.register(WebMvcConfig.class, DatasourceConfig.class);
         return context;
     }
 
