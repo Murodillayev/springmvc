@@ -37,7 +37,7 @@
     Foydalanuvchi nomi yoki parol noto'g'ri!
   </div>
   <form action="/login" method="post">
-<!--    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+    <input type="text" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <div class="mb-3">
       <label for="username" class="form-label">Foydalanuvchi nomi</label>
       <input type="text" class="form-control" id="username" name="username" placeholder="Foydalanuvchi nomini kiriting" required>

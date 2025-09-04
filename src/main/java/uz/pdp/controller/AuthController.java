@@ -27,10 +27,10 @@ public class AuthController {
 
         AuthUser authUser = AuthUser.builder()
                 .id(UUID.randomUUID().toString())
-                .fullName("Baxtiyor")
-                .password(passwordEncoder.encode("1234"))
-                .username("user")
-                .role("ADMIN")
+                .fullName("Imron")
+                .password(passwordEncoder.encode("1111"))
+                .username("manager")
+                .roleId("3")
                 .build();
 
         authUserRepository.create(authUser);
