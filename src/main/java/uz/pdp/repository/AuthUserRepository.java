@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import uz.pdp.model.AuthUser;
 
+import uz.pdp.model.Role;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -31,7 +33,7 @@ public class AuthUserRepository {
 
         AuthUser user = jdbcTemplate.queryForObject(sql,
                 (rs, rowNum) -> {
-                    AuthUser authUser = AuthUser.builder().build();
+                    AuthUser authUser = new AuthUser();
                     authUser.setUsername(rs.getString("username"));
                     authUser.setPassword(rs.getString("password"));
                     authUser.setId(rs.getString("id"));
@@ -70,4 +72,19 @@ public class AuthUserRepository {
     }
 
 
+    public List<Role> findAllRoles() {
+        String sql = "select r.* from auth_role r";
+
+        return jdbcTemplate.query(sql, new RowMapper<Role>() {
+            @Override
+            public Role mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+                Role role = new Role();
+                role.setId(rs.getString("id"));
+                role.setName(rs.getString("name"));
+                role.setCode(rs.getString("code"));
+                return role;
+            }
+        });
+    }
 }

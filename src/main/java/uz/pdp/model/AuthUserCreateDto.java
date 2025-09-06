@@ -1,21 +1,16 @@
 package uz.pdp.model;
 
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Getter
 @Setter
-public class AuthUser {
-    private String id;
+public class AuthUserCreateDto {
     private String fullName;
     private String username;
     private String password;
-    private String role;
+    private String confirmPassword;
     private String roleId;
-
-    public AuthUser() {
-        this.id = UUID.randomUUID().toString();
-    }
 }
