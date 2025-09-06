@@ -1,10 +1,13 @@
 package uz.pdp.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import uz.pdp.config.CustomUserDetails;
 import uz.pdp.model.Todo;
 import uz.pdp.service.TodoService;
 
@@ -20,8 +23,12 @@ public class TodoController {
     }
 
     @GetMapping({"/", "/index"})
-    public ModelAndView todosPage() {
+    public ModelAndView todosPage(@AuthenticationPrincipal CustomUserDetails sessionUser) {
         ModelAndView modelAndView = new ModelAndView("index");
+
+//        CustomUserDetails sessionUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String id = sessionUser.getId();
         List<Todo> todos = service.getAll();
         modelAndView.addObject("todos", todos);
         return modelAndView;

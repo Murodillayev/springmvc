@@ -28,12 +28,13 @@ public class CustomUserDetailsService implements UserDetailsService {
                 () -> new UsernameNotFoundException(username)
         );
 
-        return new User(
+        return new CustomUserDetails(
+                authUser.getId(),
                 authUser.getUsername(),
                 authUser.getPassword(),
-                prepareAuthority(authUser));
+                prepareAuthority(authUser),
+                true);
     }
-
 
 
     private @NonNull List<GrantedAuthority> prepareAuthority(AuthUser authUser) {

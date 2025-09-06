@@ -8,7 +8,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(Exception.class)
+
+//    @ExceptionHandler(Exception.class)
     public ModelAndView handleError(HttpServletRequest req, Exception ex) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("exception", ex);
@@ -16,4 +17,17 @@ public class GlobalExceptionHandler {
         mav.setViewName("error");
         return mav;
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ModelAndView handleBadRequestException(HttpServletRequest req, BadRequestException ex) {
+        ModelAndView mav = new ModelAndView();
+
+
+        mav.addObject("error_message", ex.getMessage());
+        mav.setViewName("redirect:register");
+
+        return mav;
+    }
+
+
 }
