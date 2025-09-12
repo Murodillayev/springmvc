@@ -15,6 +15,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
+import uz.pdp.filter.MyInterceptor;
 
 import java.util.Locale;
 
@@ -30,7 +31,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public SpringResourceTemplateResolver templateResolver(){
+    public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(this.applicationContext);
         templateResolver.setPrefix("classpath:/templates/");
@@ -41,7 +42,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public SpringTemplateEngine templateEngine(){
+    public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.setEnableSpringELCompiler(true);
@@ -49,7 +50,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public ThymeleafViewResolver viewResolver(){
+    public ThymeleafViewResolver viewResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
         viewResolver.setOrder(1);
@@ -58,9 +59,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
 
-
     @Bean
-    public ResourceBundleMessageSource messageSource(){
+    public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename("i18n/messages");
         messageSource.setDefaultEncoding("UTF-8");
@@ -69,7 +69,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 
     @Bean
-    public LocaleResolver localeResolver(){
+    public LocaleResolver localeResolver() {
         SessionLocaleResolver localeResolver = new SessionLocaleResolver();
         localeResolver.setDefaultLocale(Locale.getDefault());
 
@@ -80,9 +80,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        MyInterceptor myInterceptor = new MyInterceptor();
         localeChangeInterceptor.setParamName("lang");
+
+        registry.addInterceptor(myInterceptor)
+                .addPathPatterns("/index");
         registry.addInterceptor(localeChangeInterceptor);
     }
+
 
 //    @Bean
 //    public MultipartResolver multipartResolver() {

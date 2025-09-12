@@ -1,10 +1,12 @@
 package uz.pdp.config;
 
+import jakarta.servlet.Filter;
 import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.ServletRegistration;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;
+import uz.pdp.filter.MyFilter;
 
 public class ServletDispatcherConfig extends AbstractDispatcherServletInitializer {
     @Override
@@ -29,4 +31,9 @@ public class ServletDispatcherConfig extends AbstractDispatcherServletInitialize
         registration.setMultipartConfig(new MultipartConfigElement(""));
 
     }
+
+//    @Override
+//    protected Filter[] getServletFilters() {
+//        return new Filter[]{new MyFilter()};
+//    }
 }
